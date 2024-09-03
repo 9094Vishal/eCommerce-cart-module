@@ -1,17 +1,16 @@
-button {
-  border-radius: 5px;
-  padding: 5px;
-  width: 100%;
-  /* color: white; */
-  cursor: pointer;
-  font-weight: 600;
-  background-color: #576f72;
-  /* background-image: linear-gradient(45deg, #378b84, #00d4ff); */
-}
 body {
   background-color: #f0ebe3;
 }
 
+button {
+  border-radius: 5px;
+  padding: 5px;
+  width: 100%;
+  cursor: pointer;
+  font-weight: 600;
+  background-color: #576f72 !important;
+}
+
 button:hover {
-  background-color: #7d9d9c;
+  background-color: #7d9d9c !important;
 }

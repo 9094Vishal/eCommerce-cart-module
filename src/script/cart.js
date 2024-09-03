@@ -39,37 +39,40 @@ const makeCartItem = () => {
 
   const ItemCartItem = productsInCart.map((item) => {
     return `
-              <div class="cart-item" data-product="${item.id}">
-              <div class="image">
+              <div class="cart-item mt-2 flex gap-5 pt-5 pl-5" data-product="${
+                item.id
+              }">
+              <div class="image pl-[10px] h-[300px] w-[300px]">
                 <img
+                class="w-full h-full object-contain"
                   src="${item.images[0]}"
                   alt=""
                 />
               </div>
-              <div class="item-detail">
-                <h2 class="name">${item.title}</h2>
+              <div class="flex flex-1 flex-col gap-1">
+                <h2 class="text-[28px]">${item.title}</h2>
                 <div class="category">${item.category}</div>
                 <div class="in-stoke">${item.availabilityStatus}</div>
                 <div class="shipping-info">${item.shippingInformation}</div>
-                <div class="no-of-item">
-                  <button class="remove cart-btn" value="-" data-product="${
+                <div class="flex items-center gap-[10px]">
+                  <button class="remove cart-btn w-[25px] text-black" value="-" data-product="${
                     item.id
                   }">-</button>
                   <span class="count" data-product="${item.id}">${
       item.itemInCart
     }</span>
-                  <button class="add cart-btn" value="+" data-product="${
+                  <button class="add cart-btn w-[25px]" value="+" data-product="${
                     item.id
                   }">+</button> |
-                  <span class="cart-btn delete-cart-product" data-product="${
+                  <span class="cart-btn cursor-pointer" data-product="${
                     item.id
                   }" value="delete">delete</span>
                 </div>
               </div>
-              <div class="price ">
-              <div> $${item.price}</div>
+              <div class="price text-[28px] flex items-start text-end w-[300px]">
+              <div class="w-[150px]> $${item.price}</div>
             
-              <div class="product-price">$${Number(
+              <div class="product-price w-[150px]">$${Number(
                 setPrice(Number(item.price), Number(item.itemInCart))
               ).toFixed(2)}</div>
             </div>

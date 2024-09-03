@@ -118,6 +118,7 @@ const makePage = () => {
   const thumbnailImagesWrapper = document.querySelector(".img-select");
   const image = images.map((item) => {
     return ` <img
+                class="min-w-full w-full h-full object-contain block"
                 src="${item}"
                 alt="Product image"
               />
@@ -127,9 +128,10 @@ const makePage = () => {
   if (images.length > 1) {
     const thumbnailImages = images.map((item, index) => {
       return `
-       <div class="img-item">
+       <div class="img-item h-full m-1 odd:m-0 even:m-0 hover:opacity-85">
                 <a href="#" data-id="${index + 1}">
                   <img
+                 class="h-full w-full"
                     src="${item}"
                     alt="product image"
                   />
@@ -142,7 +144,7 @@ const makePage = () => {
 
   imgShowcase.innerHTML = image.join("");
   const starRating = `
-  <div class="product-rating">
+  <div class="flex items-center">
   ${rating}&nbsp;
   <div
     class="stars-container"
@@ -280,37 +282,73 @@ const makePage = () => {
   // product
   const productContent = document.querySelector(".product-content");
   const productDetails = `
-  <h2 class="product-title">${title}</h2>
+  <h2 class="product-title text-2xl md:text-5xl capitalize font-semibold text-[#12263a] my-4 
+  after:absolute after:content-[""] after:left-0 after:bottom-0 after:h-1 after:w-20 after:bg-[#12263a]
+  ">${title}</h2>
           ${starRating}
 
-          <div class="product-price">
-            <p class="last-price">Old Price: <span>$${Number(
+          <div class="product-price my-4 text-base font-semibold">
+            <p class="last-price ">Old Price: <span class="font-normal text-[#f64749] line-through">$${Number(
               price * discountPercentage
             ).toFixed(2)}</span></p>
-            <p class="new-price">New Price: <span>$${price} (${discountPercentage}%)</span></p>
+            <p class="new-price">New Price: <span class="text-[#256eff]">$${price} (${discountPercentage}%)</span></p>
           </div>
 
           <div class="product-detail">
-            <h2>about this item:</h2>
+            <h2 class="capitalize text-[#12263a] pb-2">about this item:</h2>
             <div id="description">
              ${description}
             </div>
-            <span id="btn-text">Show more</span>
-            <ul>
-              <li>Brand: <span>${brand}</span></li>
-              <li>Available: <span>${availabilityStatus}</span></li>
-              <li>Category: <span>${category}</span></li>
-              <li>Warranty: <span>${warrantyInformation}</span></li>
-               <li>Return policy: <span>${returnPolicy}</span></li>
-              <li>Shipping Fee: <span>Free</span></li>
+            <span id="btn-text" class="text-[#256eff] cursor-pointer" >Show more</span>
+            <ul class="my-4 text-[0.9rem]" >
+              <li class="m-0 list-none  flex   my-2  gap-1 font-semibold">
+              <span > <img
+              class="h-4 w-4"
+                    src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/checked.png"
+                    alt="product image"
+                  /> </span>
+                   Brand: <span class="font-normal">${brand}</span></li>
+              <li class="m-0 list-none  flex   my-2  gap-1 font-semibold"><span > <img
+              class="h-4 w-4"
+                    src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/checked.png"
+                    alt="product image"
+                  /> </span>Available: <span class="font-normal">${availabilityStatus}</span></li>
+              <li class="m-0 list-none  flex   my-2  gap-1 font-semibold"> 
+              <span > <img
+              class="h-4 w-4"
+                    src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/checked.png"
+                    alt="product image"
+                  /> </span>
+              Category: <span class="font-normal">${category}</span></li>
+              <li class="m-0 list-none  flex   my-2  gap-1 font-semibold">
+              <span > <img
+              class="h-4 w-4"
+                    src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/checked.png"
+                    alt="product image"
+                  /> </span>
+              Warranty: <span class="font-normal">${warrantyInformation}</span></li>
+               <li class="m-0 list-none  flex   my-2  gap-1 font-semibold">
+                <span > <img
+              class="h-4 w-4"
+                    src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/checked.png"
+                    alt="product image"
+                  /> </span>
+               Return policy: <span class="font-normal">${returnPolicy}</span></li>
+              <li class="m-0 list-none  flex   my-2  gap-1 font-semibold">
+              <span > <img
+              class="h-4 w-4"
+                    src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/checked.png"
+                    alt="product image"
+                  /> </span>
+              Shipping Fee: <span class="font-normal">Free</span></li>
             </ul>
           </div>
 
-          <div class="purchase-info">
+          <div class="my-8 mx-0 flex gap-[10px] items-center">
           ${
             stock != 0
-              ? `<select class="cart-quntity" name="count" id="cart-quntity"></select>
-            <button id="add-to-cart" type="button" class="btn">
+              ? `<select class="cart-quntity rounded p-[10px] bg-[#E4DCCF] border-none outline-none w-fit" name="count" id="cart-quntity"></select>
+            <button id="add-to-cart" type="button" class="btn border-[1.5px] border-[#ddd] rounded-xl text-center p-2 outline-none mr-1">
               Add to Cart <i class="fas fa-shopping-cart"></i>
             </button>`
               : `<p class="btn">Out of stock</p>`

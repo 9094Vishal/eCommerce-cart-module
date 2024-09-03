@@ -17,18 +17,19 @@ export const setNavBar = (isSearchNeeded = true) => {
 
   navbar[0].setAttribute(
     "class",
-    "flex justify-between p-4 bg-[#576F72] items-center"
+    "flex gap-[10px] md:justify-between p-4 bg-[#576F72] h-fit items-center relative overflow-hidden"
   );
   const searchBar = ` <div class="flex w-3/4 h-[35px] ">
-        <select class="rounded-l-lg bg-[#E4DCCF] p-1 border-none outline-none w-fit" name="category" id="filter-menu"></select>
+        <select class="rounded-l-lg text-[10px] md:text-lg bg-[#E4DCCF] p-1 border-none outline-none w-10 md:w-fit" name="category" id="filter-menu"></select>
         <div class="flex flex-1">
-          <input type="text" class="flex-1 border-none outline-none p-1" id="search" placeholder="Search some thing.." />
-          <img class="p-2 h-full bg-[#7D9D9C] rounded-r-lg" src="/public/images/search.png" alt="" />
+          <input type="text" class="w-32 md:flex-1 text-[12px] md:text-[20px] border-none outline-none p-1" id="search" placeholder="Search some thing.." />
+          <img class=" p-2 h-full bg-[#7D9D9C] rounded-r-lg" src="/public/images/search.png" alt="" />
         </div>
       </div>`;
-  const navbarItem = `<h1 class="cursor-pointer" id="logo">MI Store</h1>
+  const navbarItem = `<h1 class="text-[12px] md:text-2xl cursor-pointer" id="logo">MI Store</h1>
   ${isSearchNeeded ? searchBar : ""}  
-      <div class="flex items-center">
+
+      <div class="hidden md:flex items-center">
       ${
         getUserAccountType() == "storeManager"
           ? `
@@ -48,20 +49,93 @@ export const setNavBar = (isSearchNeeded = true) => {
       }
     
         
-       <span class="inline-block px-2 cursor-pointer hover:font-semibold" id="login-status">${
+       <span class="inline-block px-2 cursor-pointer hover:font-semibold login-status">${
          checkLogin() ? "Logout" : " Login"
        }</span
         >
-      </div>`;
+      </div>
+       <div class="md:hidden" id="hamburger-menu-icon">&#9776</div>
+      `;
+
+  const menu = document.getElementById("hamburger-menu");
+  const menuItem = `
+   <div
+        class="w-full bg-[#E4DCCF] h-[67px] flex items-center p-2 justify-between"
+      >
+        <h1 class="text-[24px] md:text-2xl cursor-pointer" id="logo">
+          MI Store
+        </h1>
+        <div class="text-3xl" id="menu-close" >X</div>
+      </div>
+      <div id="hamburger-menu-item" class="p-3">
+        <a href="/src/orderhistory.html">
+          <div class="flex items-center gap-3 mb-2">
+            <img
+              class="w-8 h-8 object-contain"
+              src="/public/images/order.png"
+              alt=""
+            />
+            Orders
+          </div>
+        </a>
+        <a href="/src/cart.html">
+          <div class="flex items-center gap-3 mb-2">
+            <img
+              class="w-8 h-8 object-contain"
+              src="/public/images/cart.png"
+              alt=""
+            />
+            Cart
+          </div>
+        </a>
+        
+          <div class="flex items-center gap-3 mb-2 login-status">
+            <img
+              class="w-8 h-8 object-contain"
+              src="/public/images/logout.png"
+              alt=""
+            />
+            Logout
+          </div>
+        
+      </div>
+  `;
+  menu.innerHTML = menuItem;
+
+  let isMenuOpen = false;
 
   navbar[0].innerHTML = navbarItem;
-  document
-    .getElementById("login-status")
-    .addEventListener("click", handleLogin);
+  document.querySelectorAll(".login-status").forEach((item) => {
+    item.addEventListener("click", handleLogin);
+  });
 
   document.getElementById("logo").addEventListener("click", () => {
     window.location = "/#";
   });
+
+  document.getElementById("menu-close").addEventListener("click", () => {
+    isMenuOpen = false;
+    menu.className = menu.className.replace("block", "hidden");
+  });
+  menu.addEventListener("resize", () => {
+    isMenuOpen = false;
+    menu.className = menu.className.replace("block", "hidden");
+  });
+  document
+    .getElementById("hamburger-menu-icon")
+    .addEventListener("click", () => {
+      const menu = document.getElementById("hamburger-menu");
+
+      if (isMenuOpen) {
+        isMenuOpen = false;
+        menu.className = menu.className.replace("block", "hidden");
+      } else {
+        isMenuOpen = true;
+        menu.className = menu.className.replace("hidden", "block");
+      }
+      console.log(menu.className);
+    });
+
   const makeOptionCategory = (data) => {
     const option = document.createElement("option");
     option.setAttribute("value", data);
@@ -111,7 +185,7 @@ function handleLogin() {
   if (checkLogin) {
     localStorage.removeItem("isLogin");
   }
-  window.location = "/Login.html";
+  window.location = "/src/Login.html";
 }
 
 const loadCategoryList = () => {

@@ -11,33 +11,35 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
-    <link rel="stylesheet" href="/src/style/style.css" />
-    <link rel="stylesheet" href="/src/style/productDetail.css" />
+
     <link rel="stylesheet" href="/src/style/output.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/src/style/style.css" />
   </head>
 
   <body>
     <nav></nav>
-    <div class="card-wrapper">
-      <div class="card">
+    <div
+      id="hamburger-menu"
+      class="hidden absolute top-0 right-0 h-screen w-full bg-white z-10"
+    ></div>
+    <div class="md:w-5/6 m-auto md:mt-12">
+      <div class="bg-white p-4 md:flex md:gap-6">
         <!-- card left -->
         <div class="product-imgs">
-          <div class="img-display">
-            <div class="img-showcase"></div>
+          <div class="img-display h-[300px] md:h-[400px] overflow-hidden">
+            <div
+              class="img-showcase flex w-full h-full transition-all duration-[0.5s] ease"
+            ></div>
           </div>
-          <div class="img-select"></div>
+          <div
+            class="img-select flex justify-center h-[100px] md:h-36 gap-2"
+          ></div>
         </div>
         <!-- card right -->
-        <div class="product-content">
-          <h2 class="product-title">nike shoes</h2>
-          <div class="product-rating">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star-half-alt"></i>
-            <span>4.7(21)</span>
-          </div>
+        <div class="product-content w-full md:w-1/2">
+          <!-- <h2 class="product-title">nike shoes</h2>
+          <div class="product-rating"></div>
 
           <div class="product-price">
             <p class="last-price">Old Price: <span>$257.00</span></p>
@@ -66,7 +68,7 @@
             <button type="button" class="btn">
               Add to Cart <i class="fas fa-shopping-cart"></i>
             </button>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>

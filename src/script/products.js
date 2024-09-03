@@ -34,12 +34,18 @@ const makeProductCard = (page = 1) => {
 
   pageItems.map((item) => {
     const productCrad = document.createElement("div");
-    productCrad.setAttribute("class", "product-wrapper");
+    productCrad.setAttribute(
+      "class",
+      "product-wrapper  bg-white border border-[rgba(173, 216, 230, 0.507)] w-full relative p-2 flex justify-between gap-2 flex-col cursor-pointer rounded-md"
+    );
     productCrad.setAttribute("data", item.id);
     const images = item.images.map((image) => {
-      return `  <div class="swiper-slide"><div class="swiper-slide-inside">
-                    <div class="img">
+      return `  <div class="swiper-slide"><div class="swiper-slide-inside 
+      h-full w-full float-left flex justify-center items-center bg-white
+      ">
+                    <div class="h-52 w-full flex items-start justify-center my-2 mx-0">
                       <img
+                      class="  h-full w-1/2 object-contain hover:scale-105"
                         src="${image}"
                         alt="Image not found"
                       />
@@ -49,34 +55,43 @@ const makeProductCard = (page = 1) => {
 
     productCrad.innerHTML = `
     <div>
-                <div class="large-slider-container">
-                  <div class="large-swiper">
+                <div class="large-slider-container mb-[10px]">
+                  <div class="large-swiper overflow-hidden relative">
                     <div class="swiper-wrapper">
                      ${images.join("")}
-                      
+                    
                     </div>
-                    <div class="prev"><</div>
-                    <div class="next">></div>
+                    <div class="prev 
+                    cursor-pointer absolute text-white flex items-center justify-center font-bold text-lg 
+                    transition duration-[0.6s] ease rounded-r-sm select-none top-0 bottom-0 left-2 w-[30px] h-[30px] m-auto bg-[#0000005e] hover:bg-[#0000009e]
+                    z-[4]
+                    "><</div>
+                    <div class="next cursor-pointer absolute text-white flex items-center justify-center font-bold text-lg 
+                    transition duration-[0.6s] ease rounded-r-sm select-none top-0 bottom-0 right-2 w-[30px] h-[30px] m-auto bg-[#0000005e] hover:bg-[#0000009e]
+                    z-[4]">></div>
                   </div>
+
                 </div>		
 
 
-                 <div class="product-detail-wrapper">
-                  <p>Title:</p>
-                  <div class="title">${item?.title}</div>
+                 <div class="product-detail-wrapper flex gap-2 pr-1">
+                  <p class="w-1/4">Title:</p>
+                  <div class="font-semibold w-3/4">${item?.title}</div>
                 </div>
-                <div class="product-detail-wrapper">
-                  <p>Category:</p>
-                  <div class="category">${item.category}</div>
+                <div class="product-detail-wrapper flex gap-2 pr-1">
+                  <p class="w-1/4">Category:</p>
+                  <div class="font-medium text-sm w-3/4">${item.category}</div>
                 </div>
-                <div class="product-detail-wrapper">
-                  <p>Price:</p>
-                  <div class="price">$${item?.price}</div>
+                <div class="product-detail-wrapper flex gap-2 pr-1">
+                  <p class="w-1/4 ">Price:</p>
+                  <div class="font-semibold w-3/4">$${item?.price}</div>
                 </div>
 
-                <div class="product-detail-wrapper">
-                  <p>Rating:</p>
-                  <div class="product-rating">${item.rating}&nbsp;
+               <div class="product-detail-wrapper flex gap-2 pr-1">
+                  <p class="w-1/4">Rating:</p>
+                  <div class="product-rating flex items-center">${
+                    item.rating
+                  }&nbsp;
                     <div class=" stars-container" style="font-size: 20px;color:orange;display:flex;" data-rate="${
                       item.rating
                     }">
@@ -107,8 +122,8 @@ const makeProductCard = (page = 1) => {
               </div>
             ${
               item.stock != 0
-                ? `<button class="add-to-cart-btn" data-product="${item.id}" >Add to cart</button>`
-                : `<p class="out-of-stock">Out of stock</p>`
+                ? `<button class="add-to-cart-btn w-1/2 self-center" data-product="${item.id}" >Add to cart</button>`
+                : `<p class="w-fit  self-center">Out of stock</p>`
             } `;
 
     product.appendChild(productCrad);
@@ -193,11 +208,12 @@ const createPagination = () => {
   // first button
   const firstBtn = document.createElement("button");
   firstBtn.setAttribute("id", `firstBtn`);
+  firstBtn.setAttribute("class", `w-fit p-2 cursor-pointer`);
   firstBtn.innerHTML = "<<";
   firstBtn.addEventListener("mouseover", () => {
     currentPage == 1
-      ? firstBtn.setAttribute("class", "disabled")
-      : firstBtn.removeAttribute("class");
+      ? firstBtn.className.replace("cursor-pointer", "cursor-not-allowed")
+      : firstBtn.className.replace("cursor-not-allowed", "cursor-pointer");
   });
   firstBtn.addEventListener("click", () => {
     if (currentPage == 1) return;
@@ -209,11 +225,12 @@ const createPagination = () => {
   // preveous button
   let prevBtn = document.createElement("button");
   prevBtn.setAttribute("id", `previousBtn`);
+  prevBtn.setAttribute("class", `w-fit p-2 cursor-pointer`);
   prevBtn.innerHTML = "Previous";
   prevBtn.addEventListener("mouseover", (event) => {
     currentPage == 1
-      ? prevBtn.setAttribute("class", "disabled")
-      : prevBtn.removeAttribute("class");
+      ? prevBtn.className.replace("cursor-pointer", "cursor-not-allowed")
+      : prevBtn.className.replace("cursor-not-allowed", "cursor-pointer");
   });
   prevBtn.addEventListener("click", () => {
     if (currentPage == 1) return;
@@ -254,11 +271,12 @@ const createPagination = () => {
 
   let nextBtn = document.createElement("button");
   nextBtn.setAttribute("id", `nextBtn`);
+  nextBtn.setAttribute("class", `w-fit p-2 cursor-pointer`);
   nextBtn.innerHTML = "Next";
   nextBtn.addEventListener("mouseover", (event) => {
     currentPage == totalPages
-      ? nextBtn.setAttribute("class", "disabled")
-      : nextBtn.removeAttribute("class");
+      ? nextBtn.className.replace("cursor-pointer", "cursor-not-allowed")
+      : nextBtn.className.replace("cursor-not-allowed", "cursor-pointer");
   });
   nextBtn.addEventListener("click", () => {
     if (currentPage == totalPages) {
@@ -273,11 +291,12 @@ const createPagination = () => {
   // Last button
   let lastBtn = document.createElement("button");
   lastBtn.setAttribute("id", `lastBtn`);
+  lastBtn.setAttribute("class", `w-fit p-2 cursor-pointer`);
   lastBtn.innerHTML = ">>";
   lastBtn.addEventListener("mouseover", (event) => {
     currentPage == totalPages
-      ? lastBtn.setAttribute("class", "disabled")
-      : lastBtn.removeAttribute("class");
+      ? lastBtn.className.replace("cursor-pointer", "cursor-not-allowed")
+      : lastBtn.className.replace("cursor-not-allowed", "cursor-pointer");
   });
   pagination.appendChild(lastBtn);
   // adding event listener in buttons
@@ -294,7 +313,7 @@ const makePageButtton = (index) => {
 
   span.setAttribute(
     "class",
-    `page-btns ${index == currentPage ? "active" : ""}`
+    `cursor-pointer  ${index == currentPage ? "font-semibold scale-1.3" : ""}`
   );
   if (!isNaN(index))
     span.addEventListener("click", function () {
@@ -335,7 +354,7 @@ document.addEventListener("DOMContentLoaded", function () {
     startRating = "";
     categoryFilter = "All";
     priceRangeMin = 0;
-    priceRangeMax = 1000;
+    priceRangeMax = maxProductPrice;
     rangeInput[0].value = priceRangeMin;
     rangeInput[1].value = priceRangeMax;
     rangePrice[0].innerHTML = "$" + priceRangeMin;

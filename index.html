@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="src/style/product.css" />
     <link rel="stylesheet" href="/src/style/output.css" />
     <link rel="stylesheet" href="src/style/star.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="/src/style/style.css" />
     <link
       rel="stylesheet"
@@ -32,106 +33,118 @@
       href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
     />
   </head>
-  <body>
+  <body class="relative">
     <nav></nav>
+    <div
+      id="hamburger-menu"
+      class="hidden absolute top-0 right-0 h-screen w-full bg-white z-10"
+    ></div>
     <main>
-      <div class="flex gap-2">
-        <div class="h-screen w-1/2 py-5 px-3">
-          <h3>Price</h3>
-          <div class="mt-2">
-            <div class="range-slider h-1 relative bg-[#e1e9f6] rounded-sm">
-              <span
-                class="range-selected h-full left-0 right-0 absolute rounded-md bg-[#1b53c0]"
-              ></span>
+      <div class="md:flex md:gap-2">
+        <div class="md:h-screen md:w-[15%] py-5 px-3">
+          <div class="flex gap-2 md:block">
+            <div class="mt-2 w-1/2 md:w-full">
+              <h3>Price</h3>
+              <div
+                class="range-slider h-[5px] relative bg-[#e1e9f6] rounded-sm"
+              >
+                <span
+                  class="range-selected h-full left-0 right-0 top-[-2px] z-[1] absolute rounded-md bg-[#1b53c0]"
+                ></span>
+              </div>
+              <div class="range-input relative">
+                <input
+                  type="range"
+                  class="min"
+                  min="0"
+                  max="1000"
+                  value="0"
+                  step="1"
+                />
+                <input
+                  type="range"
+                  class="max"
+                  min="0"
+                  max="1000"
+                  value="1000"
+                  step="1"
+                />
+              </div>
+              <div
+                class="range-price my-2 mx-0 w-full flex justify-between items-center"
+              >
+                <label for="min">$0</label>
+                <label for="max">$1000</label>
+              </div>
             </div>
-            <div class="range-input relative">
-              <input
-                type="range"
-                class="min"
-                min="0"
-                max="1000"
-                value="0"
-                step="1"
-              />
-              <input
-                type="range"
-                class="max"
-                min="0"
-                max="1000"
-                value="1000"
-                step="1"
-              />
-            </div>
-            <div
-              class="range-price my-2 mx-0 w-full flex justify-between items-center"
+
+            <form
+              id="rating"
+              method="post"
+              action-xhr="https://amp.dev/documentation/examples/interactivity-dynamic-content/star_rating/set"
+              target="_blank"
+              class="w-1/2 md:w-full"
             >
-              <label for="min">$0</label>
-              <label for="max">$1000</label>
-            </div>
+              <h3>Rating</h3>
+              <fieldset class="star-rating">
+                <input
+                  name="rating"
+                  type="radio"
+                  id="rating5"
+                  value="5"
+                  on="change:rating.submit"
+                />
+                <label for="rating5" title="5 stars">☆</label>
+
+                <input
+                  name="rating"
+                  type="radio"
+                  id="rating4"
+                  value="4"
+                  on="change:rating.submit"
+                />
+                <label for="rating4" title="4 stars">☆</label>
+
+                <input
+                  name="rating"
+                  type="radio"
+                  id="rating3"
+                  value="3"
+                  on="change:rating.submit"
+                />
+                <label for="rating3" title="3 stars">☆</label>
+
+                <input
+                  name="rating"
+                  type="radio"
+                  id="rating2"
+                  value="2"
+                  on="change:rating.submit"
+                />
+                <label for="rating2" title="2 stars">☆</label>
+
+                <input
+                  name="rating"
+                  type="radio"
+                  id="rating1"
+                  value="1"
+                  on="change:rating.submit"
+                />
+                <label for="rating1" title="1 stars">☆</label>
+              </fieldset>
+            </form>
           </div>
-          <h3>Rating</h3>
-          <form
-            id="rating"
-            method="post"
-            action-xhr="https://amp.dev/documentation/examples/interactivity-dynamic-content/star_rating/set"
-            target="_blank"
-          >
-            <fieldset class="star-rating">
-              <input
-                name="rating"
-                type="radio"
-                id="rating5"
-                value="5"
-                on="change:rating.submit"
-              />
-              <label for="rating5" title="5 stars">☆</label>
-
-              <input
-                name="rating"
-                type="radio"
-                id="rating4"
-                value="4"
-                on="change:rating.submit"
-              />
-              <label for="rating4" title="4 stars">☆</label>
-
-              <input
-                name="rating"
-                type="radio"
-                id="rating3"
-                value="3"
-                on="change:rating.submit"
-              />
-              <label for="rating3" title="3 stars">☆</label>
-
-              <input
-                name="rating"
-                type="radio"
-                id="rating2"
-                value="2"
-                on="change:rating.submit"
-              />
-              <label for="rating2" title="2 stars">☆</label>
-
-              <input
-                name="rating"
-                type="radio"
-                id="rating1"
-                value="1"
-                on="change:rating.submit"
-              />
-              <label for="rating1" title="1 stars">☆</label>
-            </fieldset>
-          </form>
-
           <div class="sidebar-filter-btns">
             <button id="clear-filter-btn">Clear Filter</button>
           </div>
         </div>
 
-        <div class="product-card-wrapper w-1/2">
-          <section id="products-card">
-            <div class="product-wrapper">
+        <div class="product-card-wrapper w-full md:w-[85%]">
+          <section
+            id="products-card"
+            class="md:grid md:grid-cols-3 md:gap-2 p-[15px]"
+          >
+            <div class="product-wrapper mb-3">
               <div class="">
                 <div class="slideshow-container">
                   <div class="mySlides fade">
@@ -177,7 +190,10 @@
               Add to cart
             </button>
           </section>
-          <div class="pagination" id="pagination"></div>
+          <div
+            class="p-4 flex w-full gap-2 md:gap-5 items-center md:justify-start justify-between"
+            id="pagination"
+          ></div>
         </div>
       </div>
     </main>

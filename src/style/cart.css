@@ -1,36 +1,36 @@
-section {
+/* section {
   padding: 25px;
   font-size: 25px;
   display: flex;
   gap: 20px;
-}
-.cart-wrapper {
+} */
+/* .cart-wrapper {
   padding: 10px;
   height: fit-content;
   width: 75%;
   background-color: white;
-}
-.title {
+} */
+/* .title {
   margin-bottom: 10px;
   font-size: 30px;
-}
-.cart-item {
+} */
+/* .cart-item {
   margin-top: 10px;
   display: flex;
   gap: 20px;
   padding-top: 20px;
   padding-left: 20px;
-}
-.delete-cart-product {
+} */
+/* .delete-cart-product {
   cursor: pointer;
-}
-.item-detail {
+} */
+/* .item-detail {
   flex: 1;
   display: flex;
   flex-direction: column;
   gap: 5px;
-}
-.image {
+} */
+/* .image {
   padding-left: 10px;
   height: 300px;
   width: 300px;
@@ -39,22 +39,20 @@ section {
   height: 100%;
   width: 100%;
   object-fit: contain;
-}
-.name {
-  font-size: 28px;
-}
-.no-of-item {
+} */
+
+/* .no-of-item {
   display: flex;
   align-items: center;
   gap: 10px;
-}
-.no-of-item button {
+} */
+/* .no-of-item button {
   width: 25px;
   color: black;
-}
-.cart-wrapper .price {
+} */
+/* .cart-wrapper .price {
   align-items: end;
-}
+} */
 .price {
   font-size: 28px;
 }
@@ -79,21 +77,21 @@ section {
 .subtot {
   font-size: 20px;
 }
-.price-heading {
+/* .price-heading {
   width: 100%;
   display: flex;
   justify-content: end;
 }
 .price-heading div {
-  width: 108px;
-}
-.cart-item .price {
+  width: 115px;
+} */
+/* .cart-item .price {
   display: flex;
   align-items: start;
-}
-.cart-item .price div {
+} */
+/* .cart-item .price div {
   width: 108px;
-}
+} */
 .ads {
   background-color: white;
   padding: 10px;
