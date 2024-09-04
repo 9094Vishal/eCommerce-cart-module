@@ -5,7 +5,7 @@ export const usersData = [
     accountType: "storeManager",
   },
   {
-    username: "harsit",
+    username: "harshit",
     password: "1234",
   },
   {

@@ -6,6 +6,7 @@
     <title>Orders</title>
     <link rel="stylesheet" href="./style/style.css" />
     <link rel="stylesheet" href="./style/orderhistory.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="/src/style/output.css" />
   </head>
   <body>
@@ -15,15 +16,17 @@
       class="hidden absolute top-0 right-0 h-screen w-full bg-white z-10"
     ></div>
     <main>
-      <section class="orderhistory-wrapper">
-        <div class="order-card-wrapper">
-          <h1>Purchase history</h1>
+      <section
+        class="orderhistory-wrapper w-full md:max-w-[75%] md:my-[50px] md:mx-auto p-2"
+      >
+        <div class="order-card-wrapper p-2 sm:p-5">
+          <h1 class="text-3xl">Purchase history</h1>
           <br />
-          <div class="order-card-holder">
-            <div class="order-crad">
+          <div class="order-card-holder flex flex-col gap-2 bg-white">
+            <!-- <div class="order-crad border border-[#a0a0a0] rounded-lg">
               <div class="order-card-top">
-                <div class="top-left">
-                  <div class="top-detail">
+                <div class="top-left flex w-1/2 justify-between">
+                  <div class="top-detail flex flex-col">
                     <span>ORDER PLASED</span>
                     <span>4 July 2024</span>
                   </div>
@@ -37,22 +40,24 @@
                   </div>
                 </div>
                 <div class="top-right">
-                  <div class="top-detail">
+                  <div class="top-detail flex items-end">
                     <span>ORDER #125412454</span>
                     <span>View order details | <span>Invoice </span></span>
                   </div>
                 </div>
               </div>
-              <div class="order-card-bottom">
-                <div class="bottom-left">
-                  <h2>Deliverd 6 July</h2>
-                  <!-- all products in order -->
-                  <div class="product-details">
+              <div class="order-card-bottom p-[10px] flex justify-between">
+                <div class="bottom-left w-full">
+                  <h2 class="mb-2">Deliverd 6 July</h2>
+
+                  <div class="product-details flex gap-5">
                     <img
                       src="https://cdn.dummyjson.com/products/images/beauty/Eyeshadow%20Palette%20with%20Mirror/1.png"
                       alt=""
                     />
-                    <div class="details">
+                    <div
+                      class="details flex flex-1 items-center justify-between"
+                    >
                       <div class="title">product</div>
                       <div class="price">$20</div>
                       <div class="btns">
@@ -67,7 +72,7 @@
                   <div class="feedback">Write a product review</div>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </section>

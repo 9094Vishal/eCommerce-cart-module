@@ -20,7 +20,7 @@ export const productsData = [
     },
     warrantyInformation: "1 month warranty",
     shippingInformation: "Ships in 1 month",
-    availabilityStatus: "Out of Stock",
+    availabilityStatus: "in Stock",
     reviews: [
       {
         rating: 2,
@@ -81,7 +81,7 @@ export const productsData = [
     },
     warrantyInformation: "1 year warranty",
     shippingInformation: "Ships in 2 weeks",
-    availabilityStatus: "In Stock",
+    availabilityStatus: "Out of Stock",
     reviews: [
       {
         rating: 4,

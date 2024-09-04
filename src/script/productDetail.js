@@ -282,7 +282,7 @@ const makePage = () => {
   // product
   const productContent = document.querySelector(".product-content");
   const productDetails = `
-  <h2 class="product-title text-2xl md:text-5xl capitalize font-semibold text-[#12263a] my-4 
+  <h2 class="product-title text-2xl md:text-5xl capitalize font-semibold text-[#1A374D] my-4 
   after:absolute after:content-[""] after:left-0 after:bottom-0 after:h-1 after:w-20 after:bg-[#12263a]
   ">${title}</h2>
           ${starRating}
@@ -291,55 +291,31 @@ const makePage = () => {
             <p class="last-price ">Old Price: <span class="font-normal text-[#f64749] line-through">$${Number(
               price * discountPercentage
             ).toFixed(2)}</span></p>
-            <p class="new-price">New Price: <span class="text-[#256eff]">$${price} (${discountPercentage}%)</span></p>
+            <p class="new-price">New Price: <span class="text-[#1A374D]">$${price} (${discountPercentage}%)</span></p>
           </div>
 
           <div class="product-detail">
-            <h2 class="capitalize text-[#12263a] pb-2">about this item:</h2>
+            <h2 class="capitalize text-[#406882] pb-2">about this item:</h2>
             <div id="description">
              ${description}
             </div>
-            <span id="btn-text" class="text-[#256eff] cursor-pointer" >Show more</span>
+            <span id="btn-text" class="text-[#406882] cursor-pointer" >Show more</span>
             <ul class="my-4 text-[0.9rem]" >
               <li class="m-0 list-none  flex   my-2  gap-1 font-semibold">
-              <span > <img
-              class="h-4 w-4"
-                    src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/checked.png"
-                    alt="product image"
-                  /> </span>
+           
                    Brand: <span class="font-normal">${brand}</span></li>
-              <li class="m-0 list-none  flex   my-2  gap-1 font-semibold"><span > <img
-              class="h-4 w-4"
-                    src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/checked.png"
-                    alt="product image"
-                  /> </span>Available: <span class="font-normal">${availabilityStatus}</span></li>
+              <li class="m-0 list-none  flex   my-2  gap-1 font-semibold">Available: <span class="font-normal">${availabilityStatus}</span></li>
               <li class="m-0 list-none  flex   my-2  gap-1 font-semibold"> 
-              <span > <img
-              class="h-4 w-4"
-                    src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/checked.png"
-                    alt="product image"
-                  /> </span>
+              
               Category: <span class="font-normal">${category}</span></li>
               <li class="m-0 list-none  flex   my-2  gap-1 font-semibold">
-              <span > <img
-              class="h-4 w-4"
-                    src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/checked.png"
-                    alt="product image"
-                  /> </span>
+             
               Warranty: <span class="font-normal">${warrantyInformation}</span></li>
                <li class="m-0 list-none  flex   my-2  gap-1 font-semibold">
-                <span > <img
-              class="h-4 w-4"
-                    src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/checked.png"
-                    alt="product image"
-                  /> </span>
+               
                Return policy: <span class="font-normal">${returnPolicy}</span></li>
               <li class="m-0 list-none  flex   my-2  gap-1 font-semibold">
-              <span > <img
-              class="h-4 w-4"
-                    src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/checked.png"
-                    alt="product image"
-                  /> </span>
+           
               Shipping Fee: <span class="font-normal">Free</span></li>
             </ul>
           </div>
@@ -347,7 +323,14 @@ const makePage = () => {
           <div class="my-8 mx-0 flex gap-[10px] items-center">
           ${
             stock != 0
-              ? `<select class="cart-quntity rounded p-[10px] bg-[#E4DCCF] border-none outline-none w-fit" name="count" id="cart-quntity"></select>
+              ? `<div class="relative "><select class="appearance-none cart-quntity h-full p-[10px] rounded text-gray-200 w-20 bg-[#6998AB] border-none outline-none 
+             right-2 top-[6px]" name="count" id="cart-quntity"></select> 
+                <div class="pointer-events-none absolute right-[6px] top-0 bottom-0 flex items-center px-2  justify-center">
+                  <svg class="h-4 w-4 fill-slate-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                   <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                   </svg>
+                </div>
+             </div>
             <button id="add-to-cart" type="button" class="btn border-[1.5px] border-[#ddd] rounded-xl text-center p-2 outline-none mr-1">
               Add to Cart <i class="fas fa-shopping-cart"></i>
             </button>`

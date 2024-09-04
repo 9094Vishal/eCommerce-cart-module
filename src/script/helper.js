@@ -1,4 +1,5 @@
 import { productsData } from "../mock/productData.js";
+import { sendNotification } from "./customNotification.js";
 
 export const setNavBar = (isSearchNeeded = true) => {
   const cartData = JSON.parse(localStorage.getItem(getuser()));
@@ -17,39 +18,47 @@ export const setNavBar = (isSearchNeeded = true) => {
 
   navbar[0].setAttribute(
     "class",
-    "flex gap-[10px] md:justify-between p-4 bg-[#576F72] h-fit items-center relative overflow-hidden"
+    "flex gap-[10px] justify-between p-4 bg-[#1A374D] h-fit items-center relative overflow-hidden"
   );
   const searchBar = ` <div class="flex w-3/4 h-[35px] ">
-        <select class="rounded-l-lg text-[10px] md:text-lg bg-[#E4DCCF] p-1 border-none outline-none w-10 md:w-fit" name="category" id="filter-menu"></select>
+        <select class="rounded-l-lg text-gray-200 font-medium text-[10px] sm:text-base bg-[#6998AB] p-1 border-none outline-none w-fit" name="category" id="filter-menu"></select>
         <div class="flex flex-1">
-          <input type="text" class="w-32 md:flex-1 text-[12px] md:text-[20px] border-none outline-none p-1" id="search" placeholder="Search some thing.." />
-          <img class=" p-2 h-full bg-[#7D9D9C] rounded-r-lg" src="/public/images/search.png" alt="" />
+          <input type="text" class="w-32 flex-1 text-[12px] md:text-base border outline-none p-1" id="search" placeholder="Search some thing.." />
+          <img class=" p-2 h-full bg-[#6998AB] rounded-r-lg" id="search-btn" src="/public/images/white.png" alt="" />
         </div>
       </div>`;
-  const navbarItem = `<h1 class="text-[12px] md:text-2xl cursor-pointer" id="logo">MI Store</h1>
+  const navbarItem = `<h1 class="text-[12px] text-[#fff] md:text-2xl cursor-pointer" id="logo">MI Store</h1>
   ${isSearchNeeded ? searchBar : ""}  
 
-      <div class="hidden md:flex items-center">
+      <div class="hidden md:flex items-center text-[#fff]">
       ${
         getUserAccountType() == "storeManager"
           ? `
           <span  class="inline-block px-2 cursor-pointer hover:font-semibold"
-          ><a href="/storeManager/add-product.html">Add Product</a>
+          ><a href="/src/storeManager/add-product.html">Add Product</a>
         </span>
           `
           : getUserAccountType() == "admin"
           ? ``
-          : `   <a class="relative text-black w-[35px] h-[35px]" href="/src/cart.html"
-          ><img  src="/public/images/cart.png" alt="" />
-          <p class="cart-count   absolute m-0 top-[-9px] font-semibold right-[9px] text-lg p-1">${totalCartItem}</p>
+          : `   <a class="relative hover:opacity-50 text-black w-[35px] h-[42px] " href="/src/cart.html"
+          ><img class="invert " src="/public/images/cart.png" alt="" />
+          <p class="cart-count  text-[#fff] absolute m-0   font-semibold  ${
+            totalCartItem.toString().length >= 3
+              ? "text-xs top-[-5px] right-[6px]"
+              : totalCartItem.toString().length > 1
+              ? "text-sm top-[-7px] right-[9px]"
+              : "text-lg top-[-12px] right-[10px]"
+          }  p-1">${
+              totalCartItem.toString().length >= 3 ? "99+" : totalCartItem
+            }</p>
         </a> 
-        <span   class="inline-block px-2 cursor-pointer hover:font-semibold"
+        <span   class="inline-block px-2 cursor-pointer hover:opacity-50"
           ><a href="/src/orderhistory.html">Orders</a>
         </span>`
       }
     
         
-       <span class="inline-block px-2 cursor-pointer hover:font-semibold login-status">${
+       <span class="inline-block px-2 cursor-pointer hover:opacity-50 login-status">${
          checkLogin() ? "Logout" : " Login"
        }</span
         >
@@ -60,7 +69,7 @@ export const setNavBar = (isSearchNeeded = true) => {
   const menu = document.getElementById("hamburger-menu");
   const menuItem = `
    <div
-        class="w-full bg-[#E4DCCF] h-[67px] flex items-center p-2 justify-between"
+        class="w-full bg-[#1A374D] text-white h-[67px] flex items-center p-2 justify-between"
       >
         <h1 class="text-[24px] md:text-2xl cursor-pointer" id="logo">
           MI Store
@@ -116,6 +125,8 @@ export const setNavBar = (isSearchNeeded = true) => {
   document.getElementById("menu-close").addEventListener("click", () => {
     isMenuOpen = false;
     menu.className = menu.className.replace("block", "hidden");
+    document.body.classList.remove("h-full");
+    document.body.classList.remove("overflow-hidden");
   });
   menu.addEventListener("resize", () => {
     isMenuOpen = false;
@@ -129,11 +140,15 @@ export const setNavBar = (isSearchNeeded = true) => {
       if (isMenuOpen) {
         isMenuOpen = false;
         menu.className = menu.className.replace("block", "hidden");
+        document.body.classList.remove("h-full");
+        document.body.classList.remove("overflow-hidden");
       } else {
         isMenuOpen = true;
         menu.className = menu.className.replace("hidden", "block");
+        document.body.classList.add("h-full");
+        document.body.classList.add("overflow-hidden");
       }
-      console.log(menu.className);
+      console.log(document.body);
     });
 
   const makeOptionCategory = (data) => {
@@ -220,14 +235,18 @@ export const addToCart = (id, quntity = null) => {
   let userData = JSON.parse(localStorage.getItem(user.toString()));
   if (!userData) userData = {};
   if (userData.products) {
+    if (userData.products[id.toString()]) {
+      sendNotification("warning", "Product already in cart");
+      return;
+    }
     if (userData.products[id.toString()] && productQuntity != 0) {
       if (userData.products[id.toString()] >= productQuntity) {
-        alert("You can not add more product");
+        sendNotification("error", "You can not add more product");
         return;
       } else {
         quntity != null
           ? (userData.products[id.toString()] = quntity)
-          : userData.products[id.toString()]++;
+          : sendNotification("warning", "Product already in cart");
       }
     } else {
       if (productQuntity <= 0) {

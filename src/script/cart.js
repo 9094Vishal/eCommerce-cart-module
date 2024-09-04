@@ -6,6 +6,7 @@ import {
   getcurrentUser,
   addToCart,
 } from "./helper.js";
+import { sendNotification } from "./customNotification.js";
 let cartProducts = [];
 let subTotalPrice = 0;
 
@@ -39,10 +40,10 @@ const makeCartItem = () => {
 
   const ItemCartItem = productsInCart.map((item) => {
     return `
-              <div class="cart-item mt-2 flex gap-5 pt-5 pl-5" data-product="${
+              <div class="cart-item mt-2 flex gap-1 md:gap-5 pt-5 pl-5" data-product="${
                 item.id
               }">
-              <div class="image pl-[10px] h-[300px] w-[300px]">
+              <div class="image p-2 mr-3 md:mr-0 md:pl-[10px] h-[150px] 1-[150px] md:h-[300px] md:w-[300px]">
                 <img
                 class="w-full h-full object-contain"
                   src="${item.images[0]}"
@@ -50,7 +51,7 @@ const makeCartItem = () => {
                 />
               </div>
               <div class="flex flex-1 flex-col gap-1">
-                <h2 class="text-[28px]">${item.title}</h2>
+                <h2 class="text-[22px] md:text-[28px]">${item.title}</h2>
                 <div class="category">${item.category}</div>
                 <div class="in-stoke">${item.availabilityStatus}</div>
                 <div class="shipping-info">${item.shippingInformation}</div>
@@ -66,34 +67,37 @@ const makeCartItem = () => {
                   }">+</button> |
                   <span class="cart-btn cursor-pointer" data-product="${
                     item.id
-                  }" value="delete">delete</span>
+                  }" value="delete">Delete</span>
                 </div>
               </div>
-              <div class="price text-[28px] flex items-start text-end w-[300px]">
-              <div class="w-[150px]> $${item.price}</div>
-            
-              <div class="product-price w-[150px]">$${Number(
-                setPrice(Number(item.price), Number(item.itemInCart))
-              ).toFixed(2)}</div>
+              <div class="price text-end justify-end md:justify-normal text-[28px] flex items-start w-[300px]">
+                  <div class="md:w-[150px]"> $ ${item.price} </div>
+                
+                  <div class="product-price hidden md:block md:w-[150px]">$${Number(
+                    setPrice(Number(item.price), Number(item.itemInCart))
+                  ).toFixed(2)}
+                  </div>
             </div>
             </div>
   `;
   });
+
   const subtotalItem = `
-             <div class="subtot">
+             <div class="subtot text-[20px] ${
+               totalCartItem() != 0 ? "hidden" : ""
+             }">
               Subtotal (${totalCartItem()} item):
-              <span class="price sub-total">$${subTotalPrice}</span>
+              <span class="price text-[28px] sub-total">$${subTotalPrice}</span>
             </div>
   `;
   const productTable = `
-    <div class="product-table">
-  <div class="header">
-    <h2> Your Order</h2>
+    <div class="rounded-[4%] p-[2%]">
+  <div class="bg-[#406882] text-white p-[1%] mb-2 rounded">
+    <h2 class="text-center "> Your Order</h2>
   </div>
   <div class="content">
-    <table border="1">
-      <tr>
-     
+    <table class="w-full border" >
+      <tr class="text-center">
         <th>Image</th>
         <th>Price</th>
         <th>Quntity</th>
@@ -103,23 +107,23 @@ const makeCartItem = () => {
         .map(
           ({ images, price, itemInCart }) =>
             `
-      <tr>
-        <td><img src="${
+      <tr class="text-center">
+        <td class="text-center"><img class="m-auto h-24 w-26 object-contain" src="${
           images[0]
         }" width="80px" alt="this is image apple" /></td>
-        <td>$${price}</td>
-        <td class="cart-item-count">${itemInCart}</td>
-        <td>${setPrice(price, itemInCart)}</td>
+        <td class="text-center">$${price}</td>
+        <td class="cart-item-count text-center">${itemInCart}</td>
+        <td class="text-center">${setPrice(price, itemInCart)}</td>
   
       </tr>
       `
         )
         .join("")}
-      <tr >
+      <tr class="text-center" >
        
-        <td class="total" colspan="4"><span class="subtot">
+        <td class="total text-end pr-2 " colspan="4"><span class="subtot">
                 Subtotal (${totalCartItem()} item):
-                <span class="price sub-total">$${subTotalPrice}</span>
+                <span class="price text-[28px] sub-total">$${subTotalPrice}</span>
               </span></td>
       </tr>
     </table>
@@ -127,6 +131,12 @@ const makeCartItem = () => {
 
 </div>
   `;
+  let html = `
+  <div class="w-full h-[400px] flex flex-col gap-5 items-center justify-center">
+      <h1 class="text-3xl">You don't have any product in your cart</h1>
+       <button class="w-1/2 lg:w-[30%]" id="go-to-home">Go to shopping</button>
+  </div>
+`;
   if (productsInCart.length != 0) {
     cartWrapper.innerHTML = ItemCartItem.join("");
 
@@ -134,6 +144,7 @@ const makeCartItem = () => {
     document.getElementById("modalContant").innerHTML = productTable;
   } else {
     document.getElementsByClassName("cart-payment")[0].style.display = "none";
+    cartWrapper.innerHTML = html;
   }
   for (let index = 0; index < subTotal.length; index++) {
     subTotal[index].innerHTML =
@@ -146,18 +157,19 @@ const setPrice = (price, qun) => {
 
 const SponsoredItems = () => {
   const element = document.getElementsByClassName("ads-card")[0];
-  const sponsoredItem = productsData.slice(0, 5);
+  const sponsoredItem = productsData.slice(3, 8);
 
   const html = sponsoredItem.map(({ id, title, images, price }) => {
     return `
-             <div class="items">
+             <div class="items flex gap-2">
                 <img
+                class="w-[100px] h-[100px] object-contain" 
                 src="${images[0]}"
                 alt="" />
                 <div class="ads-item-wrapper">
                   <div class="item-title">${title}</div>
                   <div class="item-price">$${price}</div>
-                  <button class="add-to-ads-cart" value="${id}">Add to cart</button>
+                  <button class="add-to-ads-cart w-fit p-2" value="${id}">Add to cart</button>
                 </div>
               </div>
   `;
@@ -173,7 +185,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".add-to-ads-cart").forEach((button) => {
     button.addEventListener("click", (e) => {
       addToCart(e.target.value);
-      location = "/cart.html";
+      location = "/src/cart.html";
     });
   });
   //   MODEL
@@ -226,19 +238,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     cartProducts = [];
     localStorage.setItem(getcurrentUser().toString(), JSON.stringify(userData));
-    location = "/orderhistory.html";
+    location = "/src/orderhistory.html";
     closeFunction();
   };
   var showModal = document.getElementById("mainModal");
 
   function clickFunction() {
     // alert("btn click function");
-    showModal.classList.remove("modalToggle");
+    showModal.classList.remove("hidden");
+    showModal.classList.add("flex");
   }
 
   function closeFunction() {
     // alert("close Button");
-    showModal.classList.add("modalToggle");
+    showModal.classList.remove("flex");
+    showModal.classList.add("hidden");
   }
 
   //   + - buttons
@@ -258,7 +272,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const cartItems = document.getElementsByClassName("cart-item");
       if (opration == "+") {
         if (cartItem[product] >= stock) {
-          alert("You can not add more product");
+          sendNotification("error", "You can not add more product");
           return;
         } else {
           cartItem[product]++;
@@ -333,4 +347,9 @@ document.addEventListener("DOMContentLoaded", () => {
       setNavBar(false);
     };
   });
+
+  if (document.getElementById("go-to-home"))
+    document.getElementById("go-to-home").addEventListener("click", (e) => {
+      location = `/src/`;
+    });
 });

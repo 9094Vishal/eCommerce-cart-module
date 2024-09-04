@@ -6,6 +6,7 @@
     <title>Login</title>
     <link rel="stylesheet" href="/src/style/output.css" />
     <link rel="stylesheet" href="/src/style/style.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
     <main class="flex h-screen w-full items-center justify-center">
@@ -21,7 +22,7 @@
                 class="p-1 border rounded-md border-black"
                 id="username"
               />
-              <p id="username-error" class="error text-red"></p>
+              <p id="username-error" class="error text-red-700"></p>
             </div>
           </div>
           <div class="form-input flex gap-2">
@@ -32,16 +33,17 @@
                 class="p-1 border rounded-md border-black"
                 id="password"
               />
+              <p id="password-error" class="error text-red-700"></p>
               <div class="">
                 <input id="showpass" type="checkbox" />
                 <label for="showpass">Show password</label>
               </div>
-              <p id="password-error" class="error text-red"></p>
+              <p id="error" class="error text-red-700"></p>
             </div>
           </div>
           <div class="form-input">
             <div class="form-input-wrapper w-full flex flex-col gap-1">
-              <button type="submit">Log in</button>
+              <button type="submit" class="py-2">Log in</button>
             </div>
           </div>
         </form>

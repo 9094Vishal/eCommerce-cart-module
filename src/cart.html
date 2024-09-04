@@ -16,12 +16,12 @@
       class="hidden absolute top-0 right-0 h-screen w-full bg-white z-10"
     ></div>
     <main style="position: relative">
-      <section class="p-[25px] text-2xl flex gap-5">
-        <div class="cart-wrapper p-2 h-fit w-3/4 bg-white">
-          <h1 class="mb-2 text-3xl">Shopping Cart</h1>
+      <section class="p-3 md:p-[25px] text-lg md:text-2xl lg:flex lg:gap-5">
+        <div class="cart-wrapper p-2 h-fit w-full lg:w-[70%] bg-white">
+          <h1 class="mb-2 text-xl md:text-3xl">Shopping Cart</h1>
           <div class="flex w-full justify-end">
-            <div class="w-[115px]">Price</div>
-            <div class="w-[115px]">Total price</div>
+            <div class="md:w-[115px]">Price</div>
+            <div class="hidden md:w-[115px] md:block">Total price</div>
           </div>
           <hr />
           <div class="cart-item-wrapper">
@@ -49,20 +49,22 @@
 
           <br />
           <hr />
-          <div class="subtotal"></div>
+          <div class="subtotal hidden lg:flex float-end justify-end"></div>
         </div>
-        <div class="cart-rightside">
-          <div class="cart-payment">
+        <div class="w-full lg:w-[30%]">
+          <div class="cart-payment bg-white p-[10px] mb-5 h-fit">
             <div class="subtotal"></div>
 
             <div class="returnPolicy"></div>
             <br />
-            <button id="checkout" class="payment">Proceed to buy</button>
+            <button id="checkout" class="payment block w-fit m-auto p-2">
+              Proceed to buy
+            </button>
           </div>
-          <div class="ads">
+          <div class="bg-white p-2 text-xl">
             <div class="ads-title">Sponsored</div>
-            <div class="ads-card">
-              <div class="items">
+            <div class="ads-card flex flex-col gap-2">
+              <div class="items flex gap-2">
                 <img
                   src="https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/1.png"
                   alt=""
@@ -77,19 +79,32 @@
           </div>
         </div>
       </section>
-      <div id="mainModal" class="modal modalToggle">
-        <div class="modalBody">
-          <div class="modalHeader">
+      <div
+        id="mainModal"
+        class="modal hidden absolute w-full bg-[#000000a6] h-screen top-0 left-0 items-center justify-center"
+      >
+        <div class="modalBody bg-white w-[769px] rounded p-[10px]">
+          <div class="modalHeader py-[1px] px-2 border-b border-[#ccc]">
             <h2>
               Proceed to buy
-              <span class="cross close-btn">&#10005;</span>
+              <span
+                class="cross close-btn float-right text-sm pr-1 hover:cursor-pointer"
+                >&#10005;</span
+              >
             </h2>
           </div>
-          <div id="modalContant">Subtotal (0 item): $0.0</div>
-          <div class="modalFooter">
-            <button class="footerbtn cross close-btn">Confirm</button>
+          <div id="modalContant" class="py-1 px-2 border-b border-[#ccc]">
+            Subtotal (0 item): $0.0
+          </div>
+          <div class="modalFooter py-1 px-2 text-center">
+            <button class="footerbtn cross close-btn p-[10px]">Confirm</button>
           </div>
         </div>
+      </div>
+      <div
+        class="notification-box flex flex-col items-center top-0 right-0 fixed w-full z-50 p-3"
+      >
+        <!-- Notification container -->
       </div>
     </main>
 

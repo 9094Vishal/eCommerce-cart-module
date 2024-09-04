@@ -17,7 +17,7 @@ const username = document.getElementById("username");
 const password = document.getElementById("password");
 const usernameError = document.getElementById("username-error");
 const passwordError = document.getElementById("password-error");
-
+const error = document.getElementById("error");
 const validatePassword = (username, password) => {
   return usersData.find(
     (item) => item.username == username && item.password == password
@@ -77,7 +77,7 @@ document.getElementById("login-form").addEventListener("submit", (e) => {
         window.location = "/src/";
       }
     } else {
-      passwordError.innerHTML = "Invalid credentials";
+      error.innerHTML = "Invalid credentials";
     }
   }
 });

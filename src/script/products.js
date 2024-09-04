@@ -61,12 +61,14 @@ const makeProductCard = (page = 1) => {
                      ${images.join("")}
                     
                     </div>
-                    <div class="prev 
+                    <div class="prev  ${images.length > 1 ? "" : "hidden"}
                     cursor-pointer absolute text-white flex items-center justify-center font-bold text-lg 
                     transition duration-[0.6s] ease rounded-r-sm select-none top-0 bottom-0 left-2 w-[30px] h-[30px] m-auto bg-[#0000005e] hover:bg-[#0000009e]
                     z-[4]
                     "><</div>
-                    <div class="next cursor-pointer absolute text-white flex items-center justify-center font-bold text-lg 
+                    <div class="next ${
+                      images.length > 1 ? "" : "hidden"
+                    } cursor-pointer absolute text-white flex items-center justify-center font-bold text-lg 
                     transition duration-[0.6s] ease rounded-r-sm select-none top-0 bottom-0 right-2 w-[30px] h-[30px] m-auto bg-[#0000005e] hover:bg-[#0000009e]
                     z-[4]">></div>
                   </div>
@@ -123,7 +125,7 @@ const makeProductCard = (page = 1) => {
             ${
               item.stock != 0
                 ? `<button class="add-to-cart-btn w-1/2 self-center" data-product="${item.id}" >Add to cart</button>`
-                : `<p class="w-fit  self-center">Out of stock</p>`
+                : `<p class="text-center bg-[#406882] text-white w-1/2 rounded-md self-center">Out of stock</p>`
             } `;
 
     product.appendChild(productCrad);
@@ -313,7 +315,11 @@ const makePageButtton = (index) => {
 
   span.setAttribute(
     "class",
-    `cursor-pointer  ${index == currentPage ? "font-semibold scale-1.3" : ""}`
+    `cursor-pointer   ${
+      index == currentPage
+        ? "font-semibold scale-1.3 text-[#1A374D]"
+        : "text-[#6998AB]"
+    }`
   );
   if (!isNaN(index))
     span.addEventListener("click", function () {
@@ -330,7 +336,7 @@ document.addEventListener("DOMContentLoaded", function () {
     inputValue(searchValue);
   });
   document,
-    this.getElementById("filter-menu").addEventListener("change", () => {
+    this.getElementById("search-btn").addEventListener("click", () => {
       searchWithDebounce(searchValue);
     });
   // Rating filter
@@ -353,7 +359,7 @@ document.addEventListener("DOMContentLoaded", function () {
     searchValue = "";
     startRating = "";
     categoryFilter = "All";
-    priceRangeMin = 0;
+    priceRangeMin = minProductPrice;
     priceRangeMax = maxProductPrice;
     rangeInput[0].value = priceRangeMin;
     rangeInput[1].value = priceRangeMax;
@@ -386,8 +392,8 @@ rangeInput[0].value = 0;
 rangeInput[1].value = maxProductPrice;
 console.log(rangeInput[0].value, rangeInput[1].value);
 
-rangePrice[0].innerHTML = minProductPrice;
-rangePrice[1].innerHTML = maxProductPrice;
+rangePrice[0].innerHTML = "$" + minProductPrice;
+rangePrice[1].innerHTML = "$" + maxProductPrice;
 
 range.style.left = (0 / rangeInput[0].max) * 100 + "%";
 range.style.right = 100 - (maxProductPrice / rangeInput[1].max) * 100 + "%";

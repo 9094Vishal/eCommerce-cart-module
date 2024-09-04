@@ -13,21 +13,28 @@
     />
 
     <link rel="stylesheet" href="/src/style/output.css" />
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
     <link rel="stylesheet" href="/src/style/style.css" />
   </head>
 
-  <body>
+  <body class="relative">
+    <div
+      class="notification-box flex flex-col items-center top-0 right-0 fixed w-full z-50 p-3"
+    >
+      <!-- Notification container -->
+    </div>
     <nav></nav>
     <div
       id="hamburger-menu"
       class="hidden absolute top-0 right-0 h-screen w-full bg-white z-10"
     ></div>
-    <div class="md:w-5/6 m-auto md:mt-12">
+    <div class="md:w-5/6 m-auto md:my-12">
       <div class="bg-white p-4 md:flex md:gap-6">
         <!-- card left -->
         <div class="product-imgs">
-          <div class="img-display h-[300px] md:h-[400px] overflow-hidden">
+          <div
+            class="img-display h-[300px] md:h-[300px] md:w-[300px] lg:h-[400px] lg:w-[400px] overflow-hidden"
+          >
             <div
               class="img-showcase flex w-full h-full transition-all duration-[0.5s] ease"
             ></div>
