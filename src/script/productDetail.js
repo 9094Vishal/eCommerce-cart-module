@@ -44,6 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
   for (let i = 1; i <= stock; i++) {
     const option = document.createElement("option");
     option.setAttribute("value", i);
+
     const value = document.createTextNode(i);
     option.appendChild(value);
     cartQuentity.appendChild(option);
@@ -323,10 +324,11 @@ const makePage = () => {
           <div class="my-8 mx-0 flex gap-[10px] items-center">
           ${
             stock != 0
-              ? `<div class="relative "><select class="appearance-none cart-quntity h-full p-[10px] rounded text-gray-200 w-20 bg-[#6998AB] border-none outline-none 
+              ? `<div class="relative text-[24px]"><select class="appearance-none cart-quntity h-full p-1 rounded text-[#1A374D]
+               w-20 bg-gray-200 border-none outline-none 
              right-2 top-[6px]" name="count" id="cart-quntity"></select> 
                 <div class="pointer-events-none absolute right-[6px] top-0 bottom-0 flex items-center px-2  justify-center">
-                  <svg class="h-4 w-4 fill-slate-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                  <svg class="h-4 w-4 fill-[#1A374D]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
                    </svg>
                 </div>

@@ -16,11 +16,3 @@ button {
 button:hover {
   background-color: #6998ab !important;
 }
-::selection {
-  background: #406882;
-  color: white;
-}
-select option:checked,
-select option:hover {
-  background-color: #6998ab !important;
-}

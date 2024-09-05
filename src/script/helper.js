@@ -21,9 +21,18 @@ export const setNavBar = (isSearchNeeded = true) => {
     "flex gap-[10px] justify-between p-4 bg-[#1A374D] h-fit items-center relative overflow-hidden"
   );
   const searchBar = ` <div class="flex w-3/4 h-[35px] ">
-        <select class="rounded-l-lg text-gray-200 font-medium text-[10px] sm:text-base bg-[#6998AB] p-1 border-none outline-none w-fit" name="category" id="filter-menu"></select>
+  <div class="relative "><select class="appearance-none h-full rounded-l-lg text-[#1A374D] font-medium text-[10px] 
+  sm:text-base bg-gray-200 p-1 border-none outline-none w-fit" name="category" id="filter-menu"" name="count"
+   id="cart-quntity"></select> 
+                <div class="pointer-events-none absolute right-[6px] top-0 bottom-0 flex items-center px-2  justify-center">
+                  <svg class="h-4 w-4 fill-[#1A374D]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                   <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                   </svg>
+                </div>
+             </div>
+       
         <div class="flex flex-1">
-          <input type="text" class="w-32 flex-1 text-[12px] md:text-base border outline-none p-1" id="search" placeholder="Search some thing.." />
+          <input type="text" class="w-32 flex-1 text-[12px] md:text-[14px] border outline-none p-1" id="search" placeholder="Search some thing.." />
           <img class=" p-2 h-full bg-[#6998AB] rounded-r-lg" id="search-btn" src="/public/images/white.png" alt="" />
         </div>
       </div>`;
@@ -148,12 +157,12 @@ export const setNavBar = (isSearchNeeded = true) => {
         document.body.classList.add("h-full");
         document.body.classList.add("overflow-hidden");
       }
-      console.log(document.body);
     });
 
   const makeOptionCategory = (data) => {
     const option = document.createElement("option");
     option.setAttribute("value", data);
+
     const value = document.createTextNode(data);
     option.appendChild(value);
     category.appendChild(option);

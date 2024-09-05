@@ -54,11 +54,6 @@ document.getElementById("login-form").addEventListener("submit", (e) => {
     if (user) {
       localStorage.setItem("isLogin", true);
       if (user.accountType === "storeManager" || user.accountType === "admin") {
-        console.log({
-          username: username.value,
-          accountType: user.accountType,
-        });
-
         localStorage.setItem(
           "user",
           JSON.stringify({

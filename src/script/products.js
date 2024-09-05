@@ -244,24 +244,29 @@ const createPagination = () => {
   // Index Button
   let noOfPage = [];
 
-  if (currentPage + 4 >= totalPages) {
-    if (totalPages <= 4) {
-      for (let index = 1; index <= totalPages; index++) {
-        noOfPage.push(index);
+  if (totalPages <= 5) {
+    for (let i = 1; i <= totalPages; i++) {
+      noOfPage.push(i);
+    }
+  } else if (currentPage <= 2) {
+    for (let i = 1; i <= 5; i++) {
+      noOfPage.push(i);
+    }
+  } else if (currentPage > 2) {
+    if (currentPage > 2 && currentPage < totalPages - 2) {
+      for (let i = currentPage - 2; i <= currentPage + 2; i++) {
+        noOfPage.push(i);
       }
-    } else if (currentPage == 1) {
-      for (let index = currentPage; index < currentPage + 4; index++) {
-        noOfPage.push(index);
+    } else {
+      for (let i = totalPages - 4; i <= totalPages; i++) {
+        noOfPage.push(i);
       }
-    } else
-      for (let index = totalPages - 3; index <= totalPages; index++) {
-        noOfPage.push(index);
-      }
+    }
   }
 
   let start = noOfPage[0];
   let end = noOfPage[noOfPage.length - 1];
-  if (currentPage > 1 && totalPages > 4) {
+  if (currentPage > 3 && totalPages > 5) {
     makePageButtton("...");
   }
   for (let index = start; index <= end; index++) {
@@ -379,7 +384,7 @@ const minProductPrice = newProductList.reduce((accumulator, currentValue) => {
 const maxProductPrice = newProductList.reduce((accumulator, currentValue) => {
   return Math.floor(Math.max(accumulator, currentValue.price));
 }, 0);
-console.log(minProductPrice, maxProductPrice);
+
 const range = document.querySelector(".range-selected");
 const rangeInput = document.querySelectorAll(".range-input input");
 const rangePrice = document.querySelectorAll(".range-price label");
@@ -390,7 +395,6 @@ rangeInput[0].min = minProductPrice;
 rangeInput[1].min = minProductPrice;
 rangeInput[0].value = 0;
 rangeInput[1].value = maxProductPrice;
-console.log(rangeInput[0].value, rangeInput[1].value);
 
 rangePrice[0].innerHTML = "$" + minProductPrice;
 rangePrice[1].innerHTML = "$" + maxProductPrice;
@@ -478,7 +482,6 @@ const searchWithDebounce = (searchValue) => {
     });
   }
 
-  console.log(newProductList);
   totalPages = Math.ceil(newProductList.length / itemsPerPage);
   makeProductCard();
 };

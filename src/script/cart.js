@@ -37,6 +37,25 @@ const makeCartItem = () => {
       );
     }, 0)
     .toFixed(2);
+  const getOption = (stock, value) => {
+    let options = "";
+    for (let i = 1; i <= stock; i++) {
+      options += `
+      <option value="${i}" ${
+        value === i ? "selected" : ""
+      } class="">${i}</option>
+      `;
+    }
+    return options;
+  };
+  const makeOption = (id, stock, items) => {
+    return `  <select class="count p-1 appearance-none cart-quntity h-full  rounded text-[#1A374D]
+               w-20 bg-gray-200 border-none outline-none 
+             right-2 top-[6px]" name="count" data-product="${id}"  >${getOption(
+      stock,
+      items
+    )}</select> `;
+  };
 
   const ItemCartItem = productsInCart.map((item) => {
     return `
@@ -56,13 +75,19 @@ const makeCartItem = () => {
                 <div class="in-stoke">${item.availabilityStatus}</div>
                 <div class="shipping-info">${item.shippingInformation}</div>
                 <div class="flex items-center gap-[10px]">
-                  <button class="remove cart-btn w-[25px] text-black" value="-" data-product="${
+                  <button class="remove cart-btn w-[30px] h-[30px] flex justify-center items-center text-black" value="-" data-product="${
                     item.id
                   }">-</button>
-                  <span class="count" data-product="${item.id}">${
-      item.itemInCart
-    }</span>
-                  <button class="add cart-btn w-[25px]" value="+" data-product="${
+                <div class="relative ">
+                ${makeOption(item.id, item.stock, item.itemInCart)}
+                <div class="pointer-events-none absolute right-[6px]  top-0 bottom-0 flex items-center px-2  justify-center">
+                  <svg class="h-4 w-4 fill-[#1A374D]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                   <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                   </svg>
+                </div>
+             </div>
+                 
+                  <button class="add cart-btn w-[30px] flex justify-center items-center h-[30px]" value="+" data-product="${
                     item.id
                   }">+</button> |
                   <span class="cart-btn cursor-pointer" data-product="${
@@ -84,9 +109,9 @@ const makeCartItem = () => {
 
   const subtotalItem = `
              <div class="subtot text-[20px] ${
-               totalCartItem() != 0 ? "hidden" : ""
+               totalCartItem() == 0 ? "hidden" : ""
              }">
-              Subtotal (${totalCartItem()} item):
+              Subtotal (<span class="total-item-in-cart">${totalCartItem()}</span> item):
               <span class="price text-[28px] sub-total">$${subTotalPrice}</span>
             </div>
   `;
@@ -122,7 +147,7 @@ const makeCartItem = () => {
       <tr class="text-center" >
        
         <td class="total text-end pr-2 " colspan="4"><span class="subtot">
-                Subtotal (${totalCartItem()} item):
+                Subtotal (<span class="total-item-in-cart">${totalCartItem()}</span> item):
                 <span class="price text-[28px] sub-total">$${subTotalPrice}</span>
               </span></td>
       </tr>
@@ -230,7 +255,6 @@ document.addEventListener("DOMContentLoaded", () => {
         orderId: new Date().getUTCMilliseconds(),
       });
     }
-    console.log(userData.orders);
 
     delete userData.products;
     for (let i = 0; i < cartItems.length; i++) {
@@ -260,91 +284,8 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".cart-btn").forEach((button) => {
     button.onclick = function (e) {
       e.stopPropagation();
-
-      let userData = JSON.parse(
-        localStorage.getItem(getcurrentUser().toString())
-      );
-
       const product = this.dataset.product;
-      const opration = e.target.value;
-      const cartItem = getCartItems();
-      const stock = productsData.find((item) => item.id == product).stock;
-      const cartItems = document.getElementsByClassName("cart-item");
-      if (opration == "+") {
-        if (cartItem[product] >= stock) {
-          sendNotification("error", "You can not add more product");
-          return;
-        } else {
-          cartItem[product]++;
-        }
-      } else if (opration == "-") {
-        if (cartItem[product] <= 1) {
-          for (let i = 0; i < cartProducts.length; i++) {
-            if (cartItems[i].dataset.product == product) {
-              cartItems[i].remove();
-              break;
-            }
-          }
-          delete cartItem[product];
-          cartProducts = cartProducts.filter((item) => item.id != product);
-        } else cartItem[product]--;
-      } else {
-        delete cartItem[product];
-        for (let i = 0; i < cartProducts.length; i++) {
-          if (cartItems[i]?.dataset?.product == product) {
-            cartItems[i].remove();
-            break;
-          }
-        }
-        cartProducts = cartProducts.filter((item) => item.id != product);
-      }
-
-      userData.products = { ...cartItem };
-
-      localStorage.setItem(
-        getcurrentUser().toString(),
-        JSON.stringify(userData)
-      );
-
-      const span = document.querySelectorAll(".count");
-
-      const cartItemCount = document.querySelectorAll(".cart-item-count");
-
-      const subtotal = document.getElementsByClassName("sub-total");
-      const productPrice = document.getElementsByClassName("product-price");
-
-      for (let i = 0; i < cartProducts.length; i++) {
-        if (cartProducts[i].id == product) {
-          cartProducts[i].itemInCart = cartItem[product];
-        }
-      }
-
-      const subTotalPrice = cartProducts
-        .reduce((accumulator, currentValue) => {
-          return Number(
-            (accumulator +=
-              Number(currentValue.price) * Number(currentValue.itemInCart))
-          );
-        }, 0)
-        .toFixed(2);
-      if (cartProducts.length != 0) {
-        for (let index = 0; index < cartProducts.length; index++) {
-          if (span[index].dataset.product == product) {
-            span[index].innerHTML = cartItem[product];
-            cartItemCount[index].innerHTML = cartItem[product];
-          }
-
-          productPrice[index].innerHTML = `$${Number(
-            Number(cartProducts[index].price) *
-              Number(cartProducts[index].itemInCart)
-          ).toFixed(2)}`;
-        }
-        console.log(span[cartProducts.length]);
-      }
-      for (let i = 0; i < subtotal.length; i++) {
-        subtotal[i].innerHTML = "$" + subTotalPrice;
-      }
-      setNavBar(false);
+      manageCart(e, product);
     };
   });
 
@@ -352,4 +293,101 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("go-to-home").addEventListener("click", (e) => {
       location = `/src/`;
     });
+  document.querySelectorAll(".count").forEach((select) => {
+    select.addEventListener("change", (e) => {
+      e.stopPropagation();
+
+      const product = e.target.dataset.product;
+      manageCart(e, product, true);
+    });
+  });
+  const manageCart = (e, product, isSelect = false) => {
+    let userData = JSON.parse(
+      localStorage.getItem(getcurrentUser().toString())
+    );
+
+    const opration = e.target.value;
+
+    const cartItem = getCartItems();
+    const stock = productsData.find((item) => item.id == product).stock;
+    const cartItems = document.getElementsByClassName("cart-item");
+    if (opration == "+") {
+      if (cartItem[product] >= stock) {
+        sendNotification("error", "You can not add more product");
+        return;
+      } else {
+        cartItem[product]++;
+      }
+    } else if (opration == "-") {
+      if (cartItem[product] <= 1) {
+        for (let i = 0; i < cartProducts.length; i++) {
+          if (cartItems[i].dataset.product == product) {
+            cartItems[i].remove();
+            break;
+          }
+        }
+        delete cartItem[product];
+        cartProducts = cartProducts.filter((item) => item.id != product);
+      } else cartItem[product]--;
+    } else if (!isSelect) {
+      delete cartItem[product];
+      for (let i = 0; i < cartProducts.length; i++) {
+        if (cartItems[i]?.dataset?.product == product) {
+          cartItems[i].remove();
+          break;
+        }
+      }
+      cartProducts = cartProducts.filter((item) => item.id != product);
+    } else {
+      cartItem[product] = Number(opration);
+    }
+
+    userData.products = { ...cartItem };
+
+    localStorage.setItem(getcurrentUser().toString(), JSON.stringify(userData));
+
+    const span = document.querySelectorAll(".count");
+
+    const cartItemCount = document.querySelectorAll(".cart-item-count");
+
+    const subtotal = document.getElementsByClassName("sub-total");
+    const totalCartTemp = document.getElementsByClassName("total-item-in-cart");
+    const productPrice = document.getElementsByClassName("product-price");
+
+    for (let i = 0; i < cartProducts.length; i++) {
+      if (cartProducts[i].id == product) {
+        cartProducts[i].itemInCart = cartItem[product];
+      }
+    }
+
+    const subTotalPrice = cartProducts
+      .reduce((accumulator, currentValue) => {
+        return Number(
+          (accumulator +=
+            Number(currentValue.price) * Number(currentValue.itemInCart))
+        );
+      }, 0)
+      .toFixed(2);
+    if (cartProducts.length != 0) {
+      for (let index = 0; index < cartProducts.length; index++) {
+        if (span[index].dataset.product == product) {
+          span[index].value = cartItem[product];
+          cartItemCount[index].innerHTML = cartItem[product];
+        }
+
+        productPrice[index].innerHTML = `$${Number(
+          Number(cartProducts[index].price) *
+            Number(cartProducts[index].itemInCart)
+        ).toFixed(2)}`;
+      }
+    }
+    for (let i = 0; i < subtotal.length; i++) {
+      subtotal[i].innerHTML = "$" + subTotalPrice;
+      totalCartTemp[i].innerHTML = totalCartItem();
+    }
+    setNavBar(false);
+    if (cartProducts.length == 0) {
+      makeCartItem();
+    }
+  };
 });
